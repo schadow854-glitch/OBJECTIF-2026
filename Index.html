@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>Mon Plan 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#E8C547;--gold2:#ffd700;
+  --teal:#4ECDC4;--purple:#A855F7;--pink:#FF6B9D;--orange:#FF8C42;
+  --green:#22c55e;--green2:#16a34a;
+  --bg:#080810;--bg2:#0f0f1a;--card:#141420;--card2:#1c1c2e;--card3:#222235;
+  --border:#ffffff0d;--border2:#ffffff18;
+  --text:#ffffff;--text2:#c8c8e0;--muted:#6666aa;
+  --radius:20px;--radius-sm:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;display:flex;flex-direction:column}
+.app{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:88px;scroll-behavior:smooth}
+.app::-webkit-scrollbar{display:none}
+
+/* NAV */
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:999;
+  background:rgba(8,8,16,0.95);backdrop-filter:blur(24px);
+  border-top:1px solid var(--border2);display:flex;padding:8px 0 20px;
+  box-shadow:0 -20px 60px rgba(0,0,0,0.5)}
+.nav-btn{flex:1;background:none;border:none;color:var(--muted);cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 2px;
+  font-family:'Outfit',sans-serif;font-size:9px;font-weight:600;letter-spacing:0.5px;
+  transition:color 0.2s}
+.nav-btn.active{color:var(--gold)}
+.nav-icon{font-size:20px}
+.nav-dot{width:4px;height:4px;background:var(--gold);border-radius:50%;margin:0 auto;display:none}
+.nav-btn.active .nav-dot{display:block}
+
+/* SECTIONS */
+.section{display:none}
+.section.active{display:block}
+
+/* SHARED */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius)}
+.card2{background:var(--card2);border:1px solid var(--border2);border-radius:var(--radius)}
+.gradient-text{background:linear-gradient(135deg,var(--gold),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.section-title{font-size:13px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin:24px 20px 12px}
+
+/* ACCUEIL */
+.home-hero{background:linear-gradient(160deg,#1a1400 0%,#0d0d1a 50%,#080810 100%);
+  padding:60px 20px 28px;position:relative;overflow:hidden}
+.home-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;
+  background:radial-gradient(circle,var(--gold)18 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.home-hero::after{content:'';position:absolute;bottom:-80px;left:-40px;width:200px;height:200px;
+  background:radial-gradient(circle,var(--purple)12 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.home-greeting{font-size:15px;color:var(--muted);font-weight:500;margin-bottom:6px}
+.home-date-title{font-size:30px;font-weight:900;line-height:1.1;margin-bottom:16px}
+.home-meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.home-streak{display:flex;align-items:center;gap:8px;background:var(--gold)15;border:1px solid var(--gold)30;border-radius:12px;padding:8px 14px}
+.home-streak-num{font-size:20px;font-weight:900;color:var(--gold)}
+.home-streak-label{font-size:12px;color:var(--text2);font-weight:600}
+.home-countdown{display:flex;align-items:center;gap:8px;background:var(--purple)15;border:1px solid var(--purple)30;border-radius:12px;padding:8px 14px}
+.home-countdown-num{font-size:20px;font-weight:900;color:var(--purple)}
+.home-countdown-label{font-size:12px;color:var(--text2);font-weight:600}
+
+/* MOTIV */
+.motiv-wrap{padding:0 16px;margin-top:20px}
+.motiv-card{background:linear-gradient(135deg,#1a0a2e,#1a1200);border:1px solid var(--purple)25;
+  border-radius:var(--radius);padding:22px;cursor:pointer;position:relative;overflow:hidden;margin-bottom:4px}
+.motiv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple)50,transparent)}
+.motiv-quote{font-size:17px;font-weight:600;color:var(--text);line-height:1.55;font-style:italic}
+.motiv-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.motiv-author{font-size:12px;color:var(--muted)}
+.motiv-refresh{font-size:13px;color:var(--purple);font-weight:700;letter-spacing:1px}
+
+/* XP */
+.xp-card{margin:0 16px;background:linear-gradient(135deg,#1a1200,#0d0d1a);
+  border:1px solid var(--gold)20;border-radius:var(--radius);padding:20px;overflow:hidden;position:relative}
+.xp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold)60,transparent)}
+.xp-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.xp-level-badge{background:var(--gold);color:#000;border-radius:10px;padding:6px 12px;font-size:13px;font-weight:900}
+.xp-title{font-size:20px;font-weight:800}
+.xp-sub{font-size:13px;color:var(--muted);margin-top:2px}
+.xp-bar-bg{background:var(--border2);border-radius:99px;height:8px;margin-bottom:8px;overflow:hidden}
+.xp-bar-fill{height:8px;border-radius:99px;background:linear-gradient(90deg,var(--gold),var(--orange));transition:width 0.8s ease}
+.xp-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;padding:0 16px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 12px;text-align:center}
+.stat-icon{font-size:24px;margin-bottom:6px}
+.stat-num{font-size:22px;font-weight:900}
+.stat-label{font-size:11px;color:var(--muted);font-weight:600;margin-top:2px}
+
+/* WEEK GOAL */
+.week-goal-card{margin:0 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.week-goal-header{padding:18px 20px;border-bottom:1px solid var(--border);background:var(--card2)}
+.week-goal-month{font-size:13px;font-weight:700;letter-spacing:2px;margin-bottom:4px}
+.week-goal-title{font-size:20px;font-weight:800}
+.week-goal-dates{font-size:13px;color:var(--muted);margin-top:2px}
+.week-goal-item{display:flex;gap:14px;padding:16px 20px;border-bottom:1px solid var(--border)88;align-items:flex-start}
+.week-goal-item:last-child{border-bottom:none}
+.wgi-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.wgi-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.wgi-text{font-size:14px;color:var(--text2);line-height:1.5}
+
+/* TASKS */
+.tasks-card{margin:0 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.tasks-header{padding:18px 20px;border-bottom:1px solid var(--border);background:var(--card2);display:flex;justify-content:space-between;align-items:center}
+.tasks-header-title{font-size:20px;font-weight:800}
+.tasks-progress-circle{width:48px;height:48px;position:relative}
+.tasks-progress-circle svg{width:48px;height:48px;transform:rotate(-90deg)}
+.tasks-progress-bg{fill:none;stroke:var(--border2);stroke-width:4}
+.tasks-progress-fill{fill:none;stroke:var(--gold);stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset 0.5s ease}
+.tasks-progress-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:12px;font-weight:800;color:var(--gold)}
+.task-category{padding:10px 20px 2px;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);background:var(--card2);border-bottom:1px solid var(--border)}
+.task-row{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--border)66;cursor:pointer;transition:background 0.15s}
+.task-row:active{background:var(--card2)}
+.task-row:last-of-type{border-bottom:none}
+.task-check{width:26px;height:26px;border-radius:8px;border:2px solid var(--muted);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;transition:all 0.2s}
+.task-row.done .task-check{background:var(--gold);border-color:var(--gold);color:#000}
+.task-body{flex:1}
+.task-name{font-size:15px;font-weight:600;transition:color 0.2s}
+.task-row.done .task-name{color:var(--muted);text-decoration:line-through}
+.task-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.task-emoji{font-size:20px}
+.tasks-reset{width:100%;background:none;border:none;border-top:1px solid var(--border);padding:14px;color:var(--muted);font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:1px}
+
+/* HEATMAP */
+.heatmap-card{margin:0 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.heatmap-title{font-size:18px;font-weight:800;margin-bottom:14px}
+.heatmap-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.heatmap-day{aspect-ratio:1;border-radius:4px;background:var(--border2)}
+.heatmap-day.level-1{background:var(--gold)30}
+.heatmap-day.level-2{background:var(--gold)55}
+.heatmap-day.level-3{background:var(--gold)80}
+.heatmap-day.level-4{background:var(--gold)}
+.heatmap-day.today{box-shadow:0 0 0 2px var(--gold)}
+.heatmap-labels{display:flex;justify-content:space-between;margin-top:8px}
+.heatmap-label{font-size:11px;color:var(--muted)}
+
+/* PLAN */
+.plan-hero{padding:60px 20px 28px;background:linear-gradient(160deg,#001a14 0%,#080810 100%);position:relative;overflow:hidden}
+.plan-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,var(--teal)15,transparent 70%);border-radius:50%}
+.plan-hero-title{font-size:36px;font-weight:900}
+.plan-hero-sub{font-size:15px;color:var(--muted);margin-top:6px}
+.month-accordion{margin:0 16px 14px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.month-acc-header{padding:22px;display:flex;align-items:center;gap:16px;cursor:pointer}
+.month-acc-color{width:4px;height:44px;border-radius:99px;flex-shrink:0}
+.month-acc-info{flex:1}
+.month-acc-name{font-size:22px;font-weight:900}
+.month-acc-theme{font-size:12px;letter-spacing:2px;color:var(--muted);font-weight:700;margin-top:2px}
+.month-acc-arrow{font-size:18px;color:var(--muted);transition:transform 0.3s}
+.month-accordion.open .month-acc-arrow{transform:rotate(180deg)}
+.month-acc-body{display:none;border-top:1px solid var(--border)}
+.month-accordion.open .month-acc-body{display:block}
+.week-acc{border-bottom:1px solid var(--border)55}
+.week-acc:last-child{border-bottom:none}
+.week-acc-header{padding:16px 22px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:var(--card2)}
+.week-acc-num{font-size:12px;font-weight:700;letter-spacing:2px;margin-bottom:4px}
+.week-acc-name{font-size:17px;font-weight:700}
+.week-acc-arrow{font-size:16px;color:var(--muted);transition:transform 0.3s}
+.week-acc.open .week-acc-arrow{transform:rotate(180deg)}
+.week-acc-body{display:none}
+.week-acc.open .week-acc-body{display:block}
+.goal-item{display:flex;gap:14px;padding:14px 22px;border-bottom:1px solid var(--border)33;align-items:flex-start}
+.goal-item:last-child{border-bottom:none}
+.goal-icon-box{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.goal-item-title{font-size:14px;font-weight:800;margin-bottom:5px;letter-spacing:0.5px}
+.goal-item-text{font-size:14px;color:var(--text2);line-height:1.55}
+.exercise-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.ex-tag{background:var(--card3);border:1px solid var(--border2);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--text2)}
+
+/* NUTRITION SECTION */
+.nutri-hero{padding:60px 20px 28px;background:linear-gradient(160deg,#001a08 0%,#080810 100%);position:relative;overflow:hidden}
+.nutri-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,var(--green)15,transparent 70%);border-radius:50%}
+.nutri-hero-title{font-size:36px;font-weight:900;color:var(--green)}
+.nutri-hero-sub{font-size:15px;color:var(--muted);margin-top:6px}
+
+/* MACRO TRACKER */
+.macro-card{margin:0 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.macro-header{padding:18px 20px;background:var(--card2);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.macro-header-title{font-size:18px;font-weight:800}
+.macro-date{font-size:13px;color:var(--muted)}
+.macro-goals-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-bottom:1px solid var(--border)}
+.macro-goal-item{background:var(--card);padding:18px 20px}
+.mgi-label{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);margin-bottom:8px}
+.mgi-nums{display:flex;align-items:baseline;gap:4px;margin-bottom:8px}
+.mgi-cur{font-size:28px;font-weight:900}
+.mgi-sep{font-size:14px;color:var(--muted)}
+.mgi-max{font-size:16px;color:var(--muted);font-weight:600}
+.mgi-unit{font-size:12px;color:var(--muted);margin-bottom:8px}
+.mgi-bar{background:var(--border2);border-radius:99px;height:6px;overflow:hidden}
+.mgi-fill{height:6px;border-radius:99px;transition:width 0.5s ease}
+
+/* QUICK ADD */
+.quick-add-wrap{padding:16px 20px;border-bottom:1px solid var(--border)}
+.qa-title{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:1px;margin-bottom:12px}
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qa-btn{background:var(--card2);border:1px solid var(--border2);border-radius:12px;padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;text-align:left;transition:all 0.15s}
+.qa-btn:active{background:var(--green)20;border-color:var(--green)50}
+.qa-btn-icon{font-size:20px;flex-shrink:0}
+.qa-btn-info{}
+.qa-btn-name{font-size:13px;font-weight:700;color:var(--text);font-family:'Outfit',sans-serif}
+.qa-btn-macros{font-size:11px;color:var(--muted);font-family:'Outfit',sans-serif;margin-top:1px}
+
+/* LOG ALIMENTS */
+.food-log{padding:16px 20px}
+.food-log-title{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:1px;margin-bottom:10px}
+.food-log-empty{font-size:14px;color:var(--muted);text-align:center;padding:20px 0;font-style:italic}
+.food-log-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)55}
+.food-log-item:last-child{border-bottom:none}
+.fli-left{display:flex;align-items:center;gap:10px}
+.fli-icon{font-size:18px}
+.fli-name{font-size:14px;font-weight:600}
+.fli-macros{font-size:12px;color:var(--muted)}
+.fli-del{font-size:16px;cursor:pointer;color:var(--muted);padding:4px 8px}
+
+/* REPAS DU JOUR */
+.meal-plan-card{margin:0 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.meal-plan-header{padding:18px 20px;background:var(--card2);border-bottom:1px solid var(--border)}
+.meal-plan-title{font-size:18px;font-weight:800}
+.meal-plan-sub{font-size:13px;color:var(--muted);margin-top:3px}
+.meal-slot{padding:16px 20px;border-bottom:1px solid var(--border)66}
+.meal-slot:last-child{border-bottom:none}
+.meal-slot-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.meal-slot-time{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted)}
+.meal-slot-name{font-size:16px;font-weight:800}
+.meal-slot-badge{background:var(--green)20;border:1px solid var(--green)40;border-radius:8px;padding:3px 8px;font-size:11px;font-weight:700;color:var(--green)}
+.meal-foods{display:flex;flex-direction:column;gap:6px}
+.meal-food-item{display:flex;align-items:center;gap:10px}
+.mfi-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0}
+.mfi-text{font-size:14px;color:var(--text2)}
+.mfi-prot{font-size:12px;color:var(--green);font-weight:700;margin-left:auto}
+.meal-tip{background:var(--green)10;border:1px solid var(--green)20;border-radius:10px;padding:10px 14px;margin-top:10px;font-size:13px;color:var(--green);line-height:1.5}
+
+/* CONSEILS NUTRITION */
+.nutri-tips-card{margin:0 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.nutri-tip-item{display:flex;gap:14px;padding:16px 20px;border-bottom:1px solid var(--border)55;align-items:flex-start}
+.nutri-tip-item:last-child{border-bottom:none}
+.nti-icon{font-size:28px;flex-shrink:0}
+.nti-title{font-size:15px;font-weight:700;margin-bottom:4px}
+.nti-text{font-size:14px;color:var(--text2);line-height:1.5}
+
+/* JOURNAL */
+.journal-hero{padding:60px 20px 28px;background:linear-gradient(160deg,#001418 0%,#080810 100%);position:relative;overflow:hidden}
+.journal-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,var(--teal)15,transparent 70%);border-radius:50%}
+.journal-hero-title{font-size:36px;font-weight:900;color:var(--teal)}
+.journal-hero-sub{font-size:15px;color:var(--muted);margin-top:6px}
+.journal-write{margin:0 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.journal-write-top{padding:18px 20px;background:var(--card2);border-bottom:1px solid var(--border)}
+.journal-write-date{font-size:16px;font-weight:800;color:var(--teal)}
+.journal-write-info{font-size:13px;color:var(--muted);margin-top:3px}
+.mood-selector{display:flex;gap:8px;padding:14px 20px;border-bottom:1px solid var(--border)}
+.mood-opt{flex:1;background:var(--card2);border:2px solid transparent;border-radius:12px;padding:10px 4px;text-align:center;cursor:pointer;transition:all 0.2s}
+.mood-opt.active{border-color:var(--gold);background:var(--gold)15}
+.mood-emoji{font-size:22px;display:block;margin-bottom:3px}
+.mood-name{font-size:10px;color:var(--muted);font-weight:600}
+.journal-prompt{padding:14px 20px;background:var(--purple)10;border-bottom:1px solid var(--border)}
+.journal-prompt-text{font-size:14px;color:var(--purple);font-weight:600;font-style:italic}
+.journal-ta{width:100%;background:transparent;border:none;color:var(--text);font-family:'Outfit',sans-serif;font-size:16px;resize:none;min-height:120px;outline:none;line-height:1.6;padding:18px 20px}
+.journal-ta::placeholder{color:var(--muted)}
+.journal-actions{display:flex;border-top:1px solid var(--border)}
+.journal-save{flex:1;background:var(--teal);color:#000;border:none;padding:16px;font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;cursor:pointer}
+.journal-entries-wrap{padding:0 16px}
+.j-entry{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px}
+.j-entry-header{padding:16px 20px;background:var(--card2);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start}
+.j-entry-date{font-size:16px;font-weight:800}
+.j-entry-day{font-size:12px;color:var(--muted);margin-top:2px}
+.j-entry-right{display:flex;align-items:center;gap:10px}
+.j-entry-mood{font-size:22px}
+.j-entry-del{font-size:18px;cursor:pointer;color:var(--muted);padding:2px 6px}
+.j-entry-body{padding:16px 20px;font-size:16px;color:var(--text2);line-height:1.6}
+.j-empty{text-align:center;padding:48px 24px;color:var(--muted);font-size:15px;line-height:1.8}
+
+/* PROFIL */
+.profil-hero{background:linear-gradient(160deg,#1a0020 0%,#080810 100%);padding:60px 20px 0;position:relative;overflow:hidden}
+.profil-hero::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,var(--purple)15,transparent 70%);border-radius:50%}
+.profil-cover{height:120px;background:linear-gradient(135deg,var(--purple)30,var(--gold)20);border-radius:20px 20px 0 0;position:relative;margin:0 -20px}
+.profil-avatar-wrap{padding:0 20px;margin-top:-44px;position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:16px}
+.profil-avatar{width:88px;height:88px;background:linear-gradient(135deg,var(--gold),var(--orange));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;border:4px solid var(--bg);box-shadow:0 8px 32px rgba(232,197,71,0.3)}
+.profil-edit-btn{background:var(--card2);border:1px solid var(--border2);border-radius:12px;padding:10px 16px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:var(--text);cursor:pointer}
+.profil-info{padding:0 20px 20px;border-bottom:1px solid var(--border)}
+.profil-name{font-size:26px;font-weight:900}
+.profil-bio{font-size:15px;color:var(--muted);margin-top:4px;line-height:1.4}
+.profil-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.profil-tag{background:var(--card2);border:1px solid var(--border2);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;color:var(--text2)}
+.profil-stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border)}
+.ps-item{padding:18px 12px;text-align:center;border-right:1px solid var(--border)}
+.ps-item:last-child{border-right:none}
+.ps-num{font-size:26px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ps-label{font-size:11px;color:var(--muted);font-weight:600;margin-top:3px;letter-spacing:1px}
+.badges-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px}
+.badge-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:18px;display:flex;align-items:center;gap:14px}
+.badge-card.locked{opacity:0.4;filter:grayscale(1)}
+.badge-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.badge-name{font-size:15px;font-weight:700;margin-bottom:3px}
+.badge-desc{font-size:12px;color:var(--muted);line-height:1.4}
+.badge-unlocked{font-size:11px;color:var(--gold);font-weight:700;margin-top:4px}
+.domain-card{margin:0 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px}
+.domain-header{padding:18px 20px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border)}
+.domain-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.domain-info{flex:1}
+.domain-name{font-size:17px;font-weight:800}
+.domain-sub{font-size:13px;color:var(--muted);margin-top:2px}
+.domain-pct{font-size:22px;font-weight:900}
+.domain-body{padding:16px 20px}
+.domain-bar-bg{background:var(--border2);border-radius:99px;height:8px;margin-bottom:10px;overflow:hidden}
+.domain-bar-fill{height:8px;border-radius:99px;transition:width 0.8s ease}
+.domain-milestones{display:flex;gap:8px;flex-wrap:wrap}
+.domain-ms{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:5px 10px;font-size:12px;color:var(--text2);font-weight:600}
+.domain-ms.done{background:var(--gold)20;border-color:var(--gold)50;color:var(--gold)}
+.rules-card{margin:0 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.rule-item{display:flex;align-items:center;gap:16px;padding:18px 20px;border-bottom:1px solid var(--border)55}
+.rule-item:last-child{border-bottom:none}
+.rule-num{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--gold)30,var(--orange)30);border:1px solid var(--gold)40;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;color:var(--gold);flex-shrink:0}
+.rule-text{font-size:16px;font-weight:600;color:var(--text);line-height:1.4}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+<!-- ACCUEIL -->
+<div id="accueil" class="section active">
+  <div class="home-hero">
+    <div class="home-greeting" id="home-greeting">Bonjour 👋</div>
+    <div class="home-date-title" id="home-date-title">—</div>
+    <div class="home-meta">
+      <div class="home-streak"><div class="home-streak-num" id="streak-num">0</div><div class="home-streak-label">jours<br>de suite 🔥</div></div>
+      <div class="home-countdown"><div class="home-countdown-num" id="countdown-num">—</div><div class="home-countdown-label">jours<br>avant Août ⏳</div></div>
+    </div>
+  </div>
+  <div class="motiv-wrap">
+    <div class="motiv-card" onclick="nextMotiv()">
+      <div class="motiv-quote" id="motiv-text">—</div>
+      <div class="motiv-footer"><span class="motiv-author">Tape pour changer</span><span class="motiv-refresh">↻ SUIVANTE</span></div>
+    </div>
+  </div>
+  <div class="section-title">⚡ Mon niveau</div>
+  <div class="xp-card">
+    <div class="xp-top">
+      <div><div class="xp-title" id="xp-level-title">—</div><div class="xp-sub" id="xp-sub">—</div></div>
+      <div class="xp-level-badge" id="xp-badge">LV —</div>
+    </div>
+    <div class="xp-bar-bg"><div class="xp-bar-fill" id="xp-fill" style="width:0%"></div></div>
+    <div class="xp-labels"><span id="xp-cur">0 XP</span><span id="xp-max">— XP</span></div>
+  </div>
+  <div class="section-title">📊 Aujourd'hui</div>
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-num" id="stat-done">0</div><div class="stat-label">TÂCHES</div></div>
+    <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-num" id="stat-streak">0</div><div class="stat-label">STREAK</div></div>
+    <div class="stat-card"><div class="stat-icon">🍽️</div><div class="stat-num" id="stat-protein">0g</div><div class="stat-label">PROTÉINES</div></div>
+  </div>
+  <div class="section-title">📅 Cette semaine</div>
+  <div class="week-goal-card" id="week-goal-card"></div>
+  <div class="section-title">✅ Mes tâches du jour</div>
+  <div class="tasks-card">
+    <div class="tasks-header">
+      <div class="tasks-header-title">Objectifs du jour</div>
+      <div class="tasks-progress-circle">
+        <svg viewBox="0 0 48 48">
+          <circle class="tasks-progress-bg" cx="24" cy="24" r="20"/>
+          <circle class="tasks-progress-fill" id="tasks-circle" cx="24" cy="24" r="20" stroke-dasharray="125.6" stroke-dashoffset="125.6"/>
+        </svg>
+        <div class="tasks-progress-text" id="tasks-pct-text">0%</div>
+      </div>
+    </div>
+    <div id="task-list"></div>
+    <button class="tasks-reset" onclick="resetTasks()">🔄 Nouvelle journée — tout remettre à zéro</button>
+  </div>
+  <div class="section-title">📆 Activité du mois</div>
+  <div class="heatmap-card">
+    <div class="heatmap-title">Mai 2026</div>
+    <div class="heatmap-grid" id="heatmap"></div>
+    <div class="heatmap-labels"><span class="heatmap-label">Moins actif</span><span class="heatmap-label">Très actif 🔥</span></div>
+  </div>
+  <div style="height:8px"></div>
+</div>
+
+<!-- PLAN -->
+<div id="plan" class="section">
+  <div class="plan-hero">
+    <div class="plan-hero-title"><span class="gradient-text">Plan 3 Mois</span></div>
+    <div class="plan-hero-sub">MAI → AOÛT 2026 · Sport + Nutrition + Objectifs</div>
+  </div>
+  <div style="height:20px"></div>
+  <div id="plan-body"></div>
+  <div style="height:8px"></div>
+</div>
+
+<!-- NUTRITION -->
+<div id="nutrition" class="section">
+  <div class="nutri-hero">
+    <div class="nutri-hero-title">Nutrition 🥗</div>
+    <div class="nutri-hero-sub">Prise de masse propre · Objectif 65-67 kg</div>
+  </div>
+  <div style="height:20px"></div>
+
+  <!-- MACRO TRACKER -->
+  <div class="macro-card" style="margin:0 16px">
+    <div class="macro-header">
+      <div class="macro-header-title">Macros du jour</div>
+      <div class="macro-date" id="nutri-date">—</div>
+    </div>
+    <div class="macro-goals-row">
+      <div class="macro-goal-item">
+        <div class="mgi-label">PROTÉINES</div>
+        <div class="mgi-nums">
+          <span class="mgi-cur" id="cur-protein" style="color:var(--green)">0</span>
+          <span class="mgi-sep">/</span>
+          <span class="mgi-max">130</span>
+        </div>
+        <div class="mgi-unit" style="color:var(--green)">grammes</div>
+        <div class="mgi-bar"><div class="mgi-fill" id="bar-protein" style="width:0%;background:var(--green)"></div></div>
+      </div>
+      <div class="macro-goal-item">
+        <div class="mgi-label">CALORIES</div>
+        <div class="mgi-nums">
+          <span class="mgi-cur" id="cur-kcal" style="color:var(--orange)">0</span>
+          <span class="mgi-sep">/</span>
+          <span class="mgi-max">2700</span>
+        </div>
+        <div class="mgi-unit" style="color:var(--orange)">kcal</div>
+        <div class="mgi-bar"><div class="mgi-fill" id="bar-kcal" style="width:0%;background:var(--orange)"></div></div>
+      </div>
+    </div>
+    <!-- QUICK ADD -->
+    <div class="quick-add-wrap">
+      <div class="qa-title">AJOUTER UN ALIMENT</div>
+      <div class="qa-grid" id="quick-add-grid"></div>
+    </div>
+    <!-- LOG -->
+    <div class="food-log">
+      <div class="food-log-title">MANGÉ AUJOURD'HUI</div>
+      <div id="food-log-list"><div class="food-log-empty">Rien enregistré pour l'instant</div></div>
+    </div>
+  </div>
+
+  <!-- PLAN DE REPAS -->
+  <div class="section-title">🍽️ Plan repas idéal</div>
+  <div class="meal-plan-card">
+    <div class="meal-plan-header">
+      <div class="meal-plan-title">Ta journée alimentaire type</div>
+      <div class="meal-plan-sub">Adapté à ton budget · Cuisine maison</div>
+    </div>
+    <div class="meal-slot">
+      <div class="meal-slot-header">
+        <div>
+          <div class="meal-slot-time">07H00 - 08H00</div>
+          <div class="meal-slot-name">Petit-déjeuner 💪</div>
+        </div>
+        <div class="meal-slot-badge">~28g protéines</div>
+      </div>
+      <div class="meal-foods">
+        <div class="meal-food-item"><div class="mfi-dot"></div><div class="mfi-text">3 œufs brouillés ou à la coque</div><div class="mfi-prot">+18g</div></div>
+        <div class="meal-food-item"><div class="mfi-dot"></div><div class="mfi-text">Pain + beurre de cacahuète (si dispo)</div><div class="mfi-prot">+5g</div></div>
+        <div class="meal-food-item"><div class="mfi-dot"></div><div class="mfi-text">1 grand verre de lait</div><div class="mfi-prot">+8g</div></div>
+        <div class="meal-food-item"><div class="mfi-dot"></div><div class="mfi-text">1 banane (énergie longue durée)</div><div class="mfi-prot">+1g</div></div>
+      </div>
+      <div class="meal-tip">💡 Remplace les beignets par les œufs — même prix, 4x plus de protéines. C'est le changement le plus important.</div>
+    </div>
+    <div class="meal-slot">
+      <div class="meal-slot-header">
+        <div>
+          <div class="meal-slot-time">12H00 - 13H00</div>
+          <div class="meal-slot-name">Déjeuner 🍱</div>
+        </div>
+        <div class="meal-slot-badge">~30g protéines</div>
+      </div>
+      <div class="meal-foods">
+        <div class="meal-food-item"><div class="mfi-dot"></div><div class="mfi-text">Riz + haricots / niébé en sauce</div><div class="mfi-prot">+11g</div></div>
+        <div class="meal-food-item"><div class="mfi-dot"></div><div class="mfi-text">Poisson ou viande (100-150g)</div><div class="mfi-prot">+22g</div></div>
+        <div class="meal-food-item"><div class="mfi-dot"></div><div class="mfi-text">Légumes dans la sauce</div><div class="mfi-prot">+2g</div></div>
+      </div>
+      <div class="meal-tip">💡 Demande une double portion de viande/poisson le midi. C'est ton repas de construction musculaire.</div>
+    </div>
+    <div class="meal-slot">
+      <div class="meal-slot-header">
+        <div>
+          <div class="meal-slot-time">16H00 - 17H00</div>
+          <div class="meal-slot-name">Collation post-sport 🥜</div>
+        </div>
+        <div class="meal-slot-badge">~15g protéines</div>
+      </div>
+      <div class="meal-foods">
+        <div class="meal-food-item"><div class="mfi-dot"></div><div class="mfi-text">Grosse poignée d'arachides (50g)</div><div class="mfi-prot">+12g</div></div>
+        <div class="meal-food-item"><div class="mfi-dot"></div><div class="mfi-text">1-2 bananes</div><div class="mfi-prot">+2g</div></div>
+        <div class="meal-food-item"><div class="mfi-dot"></div><div class="mfi-text">Eau (500ml minimum)</div><div class="mfi-prot">hydratation</div></div>
+      </div>
+      <div class="meal-tip">💡 À manger dans les 30-45 min après le sport. C'est la fenêtre anabolique — le muscle reconstruit le plus vite.</div>
+    </div>
+    <div class="meal-slot">
+      <div class="meal-slot-header">
+        <div>
+          <div class="meal-slot-time">19H00 - 20H00</div>
+          <div class="meal-slot-name">Dîner 🍽️</div>
+        </div>
+        <div class="meal-slot-badge">~35g protéines</div>
+      </div>
+      <div class="meal-foods">
+        <div class="meal-food-item"><div class="mfi-dot"></div><div class="mfi-text">Ton plat habituel (riz sauce, couscous, banane malaxée…)</div><div class="mfi-prot">+10g</div></div>
+        <div class="meal-food-item"><div class="mfi-dot"></div><div class="mfi-text">Ajouter impérativement : poulet/poisson/viande</div><div class="mfi-prot">+25g</div></div>
+        <div class="meal-food-item"><div class="mfi-dot"></div><div class="mfi-text">Double portion si possible</div><div class="mfi-prot">+énergie</div></div>
+      </div>
+      <div class="meal-tip">💡 Garde tes plats africains habituels — ils sont excellents ! Ajoute juste une bonne source de protéines dedans.</div>
+    </div>
+  </div>
+
+  <!-- CONSEILS -->
+  <div class="section-title">⚠️ Règles nutrition prise de masse</div>
+  <div class="nutri-tips-card">
+    <div class="nutri-tip-item">
+      <div class="nti-icon">🥚</div>
+      <div><div class="nti-title">3 œufs minimum par jour</div><div class="nti-text">C'est la base. Pas optionnel. 18g de protéines complètes pour quelques francs. Le meilleur investissement alimentaire possible.</div></div>
+    </div>
+    <div class="nutri-tip-item">
+      <div class="nti-icon">🍽️</div>
+      <div><div class="nti-title">3 vrais repas obligatoires</div><div class="nti-text">Manger une fois le soir seulement = corps en mode survie. Il stocke du gras et ne construit pas de muscle. 3 repas = moteur alimenté toute la journée.</div></div>
+    </div>
+    <div class="nutri-tip-item">
+      <div class="nti-icon">💧</div>
+      <div><div class="nti-title">2L d'eau par jour minimum</div><div class="nti-text">Le muscle est composé à 75% d'eau. Sans hydratation correcte, pas de croissance musculaire possible. Eau = gratuite et essentielle.</div></div>
+    </div>
+    <div class="nutri-tip-item">
+      <div class="nti-icon">😴</div>
+      <div><div class="nti-title">8h de sommeil = musculation gratuite</div><div class="nti-text">Le muscle se construit la nuit grâce à l'hormone de croissance. Dormir moins de 7h annule les effets du sport. C'est aussi important que l'entraînement.</div></div>
+    </div>
+    <div class="nutri-tip-item">
+      <div class="nti-icon">📈</div>
+      <div><div class="nti-title">Objectif : +5 à 7 kg en 3 mois</div><div class="nti-text">Passer de 60 à 65-67 kg proprement. Pas de gras inutile — que du muscle. Avec ce plan alimentaire + le sport, c'est réaliste à 19 ans.</div></div>
+    </div>
+  </div>
+  <div style="height:8px"></div>
+</div>
+
+<!-- JOURNAL -->
+<div id="journal" class="section">
+  <div class="journal-hero">
+    <div class="journal-hero-title">Journal</div>
+    <div class="journal-hero-sub">Documente chaque jour de ta transformation</div>
+  </div>
+  <div style="height:20px"></div>
+  <div class="journal-write">
+    <div class="journal-write-top">
+      <div class="journal-write-date" id="jw-date">—</div>
+      <div class="journal-write-info" id="jw-info">—</div>
+    </div>
+    <div class="mood-selector">
+      <div class="mood-opt" onclick="selectMood(this,'🔥')"><span class="mood-emoji">🔥</span><span class="mood-name">En feu</span></div>
+      <div class="mood-opt" onclick="selectMood(this,'😤')"><span class="mood-emoji">😤</span><span class="mood-name">Motivé</span></div>
+      <div class="mood-opt" onclick="selectMood(this,'😊')"><span class="mood-emoji">😊</span><span class="mood-name">Bien</span></div>
+      <div class="mood-opt" onclick="selectMood(this,'😐')"><span class="mood-emoji">😐</span><span class="mood-name">Moyen</span></div>
+      <div class="mood-opt" onclick="selectMood(this,'😓')"><span class="mood-emoji">😓</span><span class="mood-name">Dur</span></div>
+    </div>
+    <div class="journal-prompt"><div class="journal-prompt-text" id="journal-prompt">—</div></div>
+    <textarea class="journal-ta" id="journal-input" placeholder="Écris librement ta journée ici..."></textarea>
+    <div class="journal-actions">
+      <button class="journal-save" onclick="saveNote()">💾 Sauvegarder</button>
+    </div>
+  </div>
+  <div class="section-title" id="journal-entries-title">Entrées précédentes</div>
+  <div class="journal-entries-wrap" id="journal-entries"></div>
+  <div style="height:8px"></div>
+</div>
+
+<!-- PROFIL -->
+<div id="profil" class="section">
+  <div class="profil-hero">
+    <div class="profil-cover"></div>
+    <div class="profil-avatar-wrap">
+      <div class="profil-avatar">🥋</div>
+      <button class="profil-edit-btn">✏️ Modifier</button>
+    </div>
+    <div class="profil-info">
+      <div class="profil-name">Brandon · Schadow</div>
+      <div class="profil-bio">19 ans · 60 kg · En route vers la meilleure version de moi-même</div>
+      <div class="profil-tags">
+        <div class="profil-tag">🥋 Taekwondo</div>
+        <div class="profil-tag">💪 Prise de masse</div>
+        <div class="profil-tag">🇩🇪 B2 Goethe</div>
+        <div class="profil-tag">🔥 Transformation</div>
+      </div>
+    </div>
+    <div class="profil-stats">
+      <div class="ps-item"><div class="ps-num" id="ps-streak">0</div><div class="ps-label">STREAK</div></div>
+      <div class="ps-item"><div class="ps-num" id="ps-tasks">0</div><div class="ps-label">TÂCHES</div></div>
+      <div class="ps-item"><div class="ps-num" id="ps-notes">0</div><div class="ps-label">JOURNAL</div></div>
+    </div>
+  </div>
+  <div class="section-title">🎯 Progression par domaine</div>
+  <div id="domain-cards"></div>
+  <div class="section-title">🏆 Badges & Achievements</div>
+  <div class="badges-grid" id="badges-grid"></div>
+  <div class="section-title">📏 Mes règles absolues</div>
+  <div class="rules-card">
+    <div class="rule-item"><div class="rule-num">01</div><div class="rule-text">Agis. Ne parle pas. Les résultats parlent seuls.</div></div>
+    <div class="rule-item"><div class="rule-num">02</div><div class="rule-text">3 repas par jour minimum. 3 œufs minimum. Sans exception.</div></div>
+    <div class="rule-item"><div class="rule-num">03</div><div class="rule-text">Constance > Perfection. Tous les jours, sans excuses.</div></div>
+    <div class="rule-item"><div class="rule-num">04</div><div class="rule-text">0 téléphone au réveil et 1h avant de dormir.</div></div>
+    <div class="rule-item"><div class="rule-num">05</div><div class="rule-text">Journal chaque soir. 5 lignes minimum. Honnêtement.</div></div>
+    <div class="rule-item"><div class="rule-num">06</div><div class="rule-text">8h de sommeil = construction musculaire gratuite. Priorité absolue.</div></div>
+  </div>
+  <div style="height:24px"></div>
+</div>
+
+</div>
+
+<!-- NAV (5 tabs) -->
+<nav class="nav">
+  <button class="nav-btn active" onclick="showTab('accueil',this)"><span class="nav-icon">🏠</span><span>Accueil</span><div class="nav-dot"></div></button>
+  <button class="nav-btn" onclick="showTab('plan',this)"><span class="nav-icon">📋</span><span>Plan</span><div class="nav-dot"></div></button>
+  <button class="nav-btn" onclick="showTab('nutrition',this)"><span class="nav-icon">🥗</span><span>Nutrition</span><div class="nav-dot"></div></button>
+  <button class="nav-btn" onclick="showTab('journal',this)"><span class="nav-icon">📝</span><span>Journal</span><div class="nav-dot"></div></button>
+  <button class="nav-btn" onclick="showTab('profil',this)"><span class="nav-icon">👤</span><span>Profil</span><div class="nav-dot"></div></button>
+</nav>
+
+<script>
+// ===== DATA =====
+
+const FOODS = [
+  {icon:'🥚', name:'Œuf entier',    protein:6,  kcal:70,  unit:'1 œuf'},
+  {icon:'🥛', name:'Lait (verre)',  protein:8,  kcal:150, unit:'250 ml'},
+  {icon:'🥜', name:'Arachides',     protein:12, kcal:290, unit:'50g (poignée)'},
+  {icon:'🍌', name:'Banane',        protein:1,  kcal:90,  unit:'1 banane'},
+  {icon:'🐟', name:'Poisson',       protein:22, kcal:120, unit:'100g'},
+  {icon:'🍗', name:'Poulet',        protein:25, kcal:165, unit:'100g'},
+  {icon:'🍚', name:'Riz cuit',      protein:4,  kcal:260, unit:'200g'},
+  {icon:'🫘', name:'Haricots',      protein:7,  kcal:130, unit:'100g'},
+  {icon:'🥩', name:'Viande',        protein:22, kcal:200, unit:'100g'},
+  {icon:'🍞', name:'Pain',          protein:4,  kcal:130, unit:'2 tranches'},
+];
+
+const PLAN_DATA = [
+  { id:'mai', name:'MAI', color:'#E8C547', theme:'DISCIPLINE', sub:'Installer la routine, zéro excuses',
+    weeks:[
+      {num:1,dates:'6 → 12 Mai',name:'Lancer la machine',goals:[
+        {icon:'💪',title:'Sport — Programme débutant',
+         text:'Matin : 3×10 pompes classiques (forme parfaite, lent) + 3×15 abdos crunch + 3×15 squats. Soir : Shadow boxing 15 min. Repos Dimanche.',
+         exercises:['3×10 Pompes','3×15 Abdos','3×15 Squats','Shadow boxing 15min']},
+        {icon:'🏋️',title:'Nouveaux exercices à intégrer',
+         text:'Tractions : trouve une barre (parc, arbre solide, terrasse). Commence par 3×3 — même si c\'est difficile. Dips : 2 chaises solides, 3×8. Superman : au sol, 3×12.',
+         exercises:['3×3 Tractions','3×8 Dips','3×12 Superman']},
+        {icon:'🍽️',title:'Nutrition — Priorité semaine 1',
+         text:'Objectif simple : ajouter 3 œufs chaque matin dès maintenant. Remplacer les beignets par les œufs. Manger un vrai repas à midi si possible.',
+         exercises:['3 œufs/jour','Repas midi ajouté','Collation arachides']},
+        {icon:'🇩🇪',title:'Allemand Goethe',
+         text:'Test blanc B2 complet format officiel. Identifier précisément chaque point faible.',exercises:[]},
+      ]},
+      {num:2,dates:'13 → 19 Mai',name:'Ancrer les habitudes',goals:[
+        {icon:'💪',title:'Sport — Montée en charge',
+         text:'Matin : 4×12 pompes + 4×10 pompes larges (poitrine) + planche 3×30sec + fentes 3×10 chaque jambe. Soir : TKD enchaînements 20 min.',
+         exercises:['4×12 Pompes','4×10 Pompes larges','Planche 3×30sec','Fentes 3×10']},
+        {icon:'🏋️',title:'Tractions & Dips progression',
+         text:'Tractions : 3×5. Si impossible, tractions assistées (pied sur chaise). Dips : 3×10. Superman : 3×15. Commencer les pompes serrées 3×8 (triceps).',
+         exercises:['3×5 Tractions','3×10 Dips','3×15 Superman','3×8 Pompes serrées']},
+        {icon:'🍽️',title:'Nutrition — Semaine 2',
+         text:'3 repas complets obligatoires. Objectif 80g de protéines/jour cette semaine. Collation arachides + banane après chaque session sport.',
+         exercises:['80g protéines/jour','3 repas ✓','Collation post-sport ✓']},
+        {icon:'🇩🇪',title:'Allemand Goethe',
+         text:'Schreiben intensif — 1 texte argumentatif complet par jour. Corriger et réécrire.',exercises:[]},
+      ]},
+      {num:3,dates:'20 → 26 Mai',name:'Intensifier',goals:[
+        {icon:'💪',title:'Sport — Full body complet',
+         text:'Programme matin complet 45min : pompes variées + tractions + abdos avancés + squats sautés. Shadow boxing + TKD 25 min le soir.',
+         exercises:['Pompes variées','Tractions 3×6','Abdos avancés','Squats sautés','TKD 25min']},
+        {icon:'🏋️',title:'Exercices ciblés esthétique',
+         text:'Pompes diamant 3×8 (triceps). Pompes decline (pieds surélevés) 3×8 (haut poitrine). Relevés de genoux suspendus 3×12 (abdos bas). Pike push-up 3×8 (épaules).',
+         exercises:['Pompes diamant 3×8','Pompes decline 3×8','Relevés genoux 3×12','Pike push-up 3×8']},
+        {icon:'🍽️',title:'Nutrition — Semaine 3',
+         text:'Objectif 110g protéines/jour. Si pas atteint, doubler les arachides et œufs. Peser mentalement chaque repas : y a-t-il une protéine dans l\'assiette ?',
+         exercises:['110g protéines/jour','Contrôle qualité chaque repas']},
+        {icon:'🇩🇪',title:'Allemand + Digital',
+         text:'Hören intensif + lecture textes niveau C1. Excel bases 20 min/jour.',exercises:[]},
+      ]},
+      {num:4,dates:'27 → 31 Mai',name:'Bilan et transition',goals:[
+        {icon:'💪',title:'Bilan physique Mai',
+         text:'Photos comparaison semaine 1 vs semaine 4. Test max pompes sans arrêt. Test max tractions. Mesurer tour de poitrine + bras si possible.',
+         exercises:['Photos avant/après','Test max pompes','Test max tractions']},
+        {icon:'🍽️',title:'Bilan nutrition Mai',
+         text:'Es-tu arrivé à 3 repas/jour ? As-tu mangé 3 œufs/jour ? Ta progression sur la balance (objectif +0,5 à 1 kg). Ajustements pour Juin.',
+         exercises:['Vérif 3 repas/jour','Vérif 3 œufs/jour','Peser → objectif +1kg']},
+        {icon:'🇩🇪',title:'Bilan Goethe',
+         text:'Examen blanc chronométré format officiel Goethe. Analyse honnête des résultats.',exercises:[]},
+      ]}
+    ]
+  },
+  { id:'juin', name:'JUIN', color:'#4ECDC4', theme:'CONSTRUCTION', sub:'Corps visible, habitudes solides',
+    weeks:[
+      {num:1,dates:'1 → 7 Juin',name:'Corriger les lacunes',goals:[
+        {icon:'💪',title:'Sport — Niveau intermédiaire',
+         text:'4×20 pompes + 4×8 tractions + abdos bicycle 3×20 + relevés jambes 3×15 + gainage latéral 3×30sec.',
+         exercises:['4×20 Pompes','4×8 Tractions','Bicycle 3×20','Relevés jambes 3×15','Gainage latéral 3×30sec']},
+        {icon:'🏋️',title:'Résistance & Force',
+         text:'Introduire les bandes élastiques si disponibles. Pistol squat assisté 3×5. Hollow body hold 3×20sec. L-sit attempt entre 2 chaises.',
+         exercises:['Pistol squat assisté','Hollow body 3×20sec','L-sit attempt']},
+        {icon:'🍽️',title:'Nutrition Juin',
+         text:'Objectif 120-130g protéines/jour. Corps en pleine construction. Si tu stagnes sur la balance, augmente les portions de riz et arachides. Pas de Gainer — vraie nourriture.',
+         exercises:['120-130g protéines/jour','Balance : +1 à 2kg depuis Mai']},
+        {icon:'🇩🇪',title:'Allemand Goethe',
+         text:'Cibler précisément les lacunes de Mai. Sprechen — monologues de 3 min.',exercises:[]},
+      ]},
+      {num:2,dates:'8 → 14 Juin',name:'Corps visible',goals:[
+        {icon:'💪',title:'Sport — TKD + Masse',
+         text:'Résistance + TKD complets. Enchaînements kicks + sport matinal. Corps en transformation visible.',
+         exercises:['Full body matin 50min','TKD enchaînements 30min','Tractions 4×8']},
+        {icon:'🏋️',title:'Définition musculaire',
+         text:'Ajouter des séries courtes mais intenses. Pompes explosives 3×8 (clap si possible). Dips 4×12. Pull-up negative (descente lente 5sec) 3×5.',
+         exercises:['Pompes explosives 3×8','Dips 4×12','Pull-up negative 3×5']},
+        {icon:'🍽️',title:'Nutrition — Récupération',
+         text:'Ajouter du lait le soir avant de dormir (protéines lentes pour la nuit). Manger dans les 30 min après chaque session. Ne jamais faire de sport à jeun.',
+         exercises:['Lait avant de dormir','Manger dans 30min post-sport','Jamais de sport à jeun']},
+        {icon:'🎌',title:'Communauté + Digital',
+         text:'Créer le compte et poster les 3 premiers contenus. Excel créer des vrais tableaux.',exercises:[]},
+      ]},
+      {num:3,dates:'15 → 21 Juin',name:'Compréhension intensive',goals:[
+        {icon:'💪',title:'Sport — Intensité max',
+         text:'Full body + combat 30 min le soir. Progression clairement visible dans le miroir. Photos de progression.',
+         exercises:['Full body 55min','Combat/TKD 30min','Photos progression']},
+        {icon:'🍽️',title:'Nutrition — Optimisation',
+         text:'Objectif 130g protéines/jour atteint et maintenu. Si tu n\'atteins pas la cible : ajouter 2 œufs supplémentaires à midi et une collation arachides supplémentaire.',
+         exercises:['130g protéines/jour ✓','Ajustements si nécessaire']},
+        {icon:'🇩🇪',title:'Allemand',
+         text:'Lesen + Hören — exercices officiels Goethe uniquement.',exercises:[]},
+      ]},
+      {num:4,dates:'22 → 30 Juin',name:'Bilan 2 mois',goals:[
+        {icon:'💪',title:'Bilan physique Juin',
+         text:'Mesures complètes. Photos. Test max pompes + tractions. Objectif : +2 à 3 kg depuis le début. Corps visible dans le miroir.',
+         exercises:['Mesures + photos','Test max pompes','Test max tractions','Peser → +2-3kg total']},
+        {icon:'🍽️',title:'Bilan nutrition 2 mois',
+         text:'La nutrition est-elle devenue automatique ? 3 repas/jour ? 3 œufs/jour ? Si oui : tu as créé une habitude pour la vie. Si non : identifier le blocage.',
+         exercises:['Bilan habitudes alimentaires']},
+        {icon:'🇩🇪',title:'Goethe',
+         text:'Simulation complète Goethe format réel. Analyse des résultats.',exercises:[]},
+      ]}
+    ]
+  },
+  { id:'juillet', name:'JUILLET', color:'#A855F7', theme:'CONSOLIDATION', sub:'Corps transformé, résultats concrets',
+    weeks:[
+      {num:1,dates:'1 → 7 Juil',name:'Simulation hebdo',goals:[
+        {icon:'💪',title:'Sport — Niveau avancé',
+         text:'Pompes explosives + pistol squat + burpees 3×10 + tractions pondérées (sac à dos léger). Corps au maximum de ta capacité actuelle.',
+         exercises:['Pompes explosives','Pistol squat','Burpees 3×10','Tractions +poids']},
+        {icon:'🍽️',title:'Nutrition — Maintenance & Masse',
+         text:'Objectif 65-67 kg atteint ou proche. Maintenir 130g protéines/jour. Si objectif poids atteint : continuer, le muscle remplace le gras. Corps sculpté.',
+         exercises:['130g protéines maintenu','Peser → 65-67kg objectif']},
+        {icon:'🇩🇪',title:'Goethe',
+         text:'Simulation examen complet chaque semaine. Les 4 compétences enchaînées.',exercises:[]},
+      ]},
+      {num:2,dates:'8 → 14 Juil',name:'Peaufinage total',goals:[
+        {icon:'💪',title:'Sport — Esthétique finale',
+         text:'Shadow boxing quotidien 30 min + programme complet. Corps de combattant. Séance dédiée définition : pompes 4×15, dips 4×12, tractions 4×8.',
+         exercises:['Shadow boxing 30min quotidien','Pompes 4×15','Dips 4×12','Tractions 4×8']},
+        {icon:'🍽️',title:'Nutrition finalisée',
+         text:'3 mois de bonne nutrition installés. Tu n\'as plus besoin de te forcer — c\'est ton mode de vie maintenant. Félicite-toi de ce changement profond.',
+         exercises:['Habitude installée ✓','Mode de vie ✓']},
+        {icon:'🇩🇪',title:'Allemand + Digital',
+         text:'Peaufiner chaque compétence. Excel et Word pros au quotidien.',exercises:[]},
+      ]},
+      {num:3,dates:'15 → 21 Juil',name:'Confiance maximale',goals:[
+        {icon:'💪',title:'Transformation documentée',
+         text:'Séance photo comparaison complète : Jour 1 vs Jour 75. Corps transformé visible. Mois 1 vs Mois 3 : les chiffres et les photos ne mentent pas.',
+         exercises:['Photos comparaison complètes','Mesures finales','Tests de force max']},
+        {icon:'🍽️',title:'Bilan 3 mois nutrition',
+         text:'Combien de kg pris ? Combien de protéines en moyenne/jour ? La nutrition t\'a construit autant que le sport. C\'est la leçon de ces 3 mois.',
+         exercises:['Bilan poids final','Bilan habitudes']},
+        {icon:'🇩🇪',title:'Bilan Goethe',
+         text:'Confiance totale acquise. Révision légère avant exam.',exercises:[]},
+      ]},
+      {num:4,dates:'22 → 31 Juil',name:'Repos & Vision',goals:[
+        {icon:'💪',title:'Décharge active',
+         text:'Programme léger — maintien. Récupération mentale et physique avant Août. Le corps se consolide pendant le repos.',
+         exercises:['Programme léger','Récupération active','Préparation Août']},
+        {icon:'🎯',title:'Vision Août+',
+         text:'Célébrer chaque victoire silencieuse. Définir les objectifs du prochain trimestre. Tu as 20 ans en Août — tu commences avec un corps et des habitudes transformés.',exercises:[]},
+      ]}
+    ]
+  }
+];
+
+const TASKS = [
+  {cat:'💪 SPORT',icon:'🏋️',name:'Sport du matin',sub:'Pompes · Abdos · Squats · Tractions · Dips'},
+  {cat:'💪 SPORT',icon:'🥋',name:'Combat / Taekwondo',sub:'Shadow boxing 20-30 min'},
+  {cat:'🍽️ NUTRITION',icon:'🥚',name:'3 œufs minimum mangés',sub:'Petit-déjeuner ou déjeuner'},
+  {cat:'🍽️ NUTRITION',icon:'🍱',name:'3 repas complets aujourd\'hui',sub:'Petit-déj + Déjeuner + Dîner'},
+  {cat:'🍽️ NUTRITION',icon:'🥜',name:'Collation post-sport',sub:'Arachides + banane dans les 30 min'},
+  {cat:'🧠 MENTAL',icon:'🇩🇪',name:'Allemand Goethe',sub:'45 min — exercices officiels'},
+  {cat:'🧠 MENTAL',icon:'📵',name:'0 téléphone au réveil',sub:'Pas d\'écran les 30 premières minutes'},
+  {cat:'🧠 MENTAL',icon:'📝',name:'Journal du soir',sub:'5 lignes minimum — honnêtement'},
+];
+
+const MOTIVS = [
+  "Le succès appartient à ceux qui commencent avant d'être prêts.",
+  "Chaque jour sans action est un jour offert à ceux qui travaillent.",
+  "Ta discipline d'aujourd'hui est ta liberté de demain.",
+  "Les grands résultats viennent de petites actions répétées chaque jour.",
+  "Travaille en silence. Laisse ton succès faire du bruit.",
+  "Tu n'as pas besoin de motivation. Tu as besoin de discipline.",
+  "Chaque répétition te rapproche de la version que tu veux devenir.",
+  "Les excuses n'ont jamais construit d'empire.",
+  "Sois obsédé ou sois ordinaire. Il n'y a pas de milieu.",
+  "Fais aujourd'hui ce que les autres refusent de faire.",
+  "Ta transformation commence dans le silence de tes actions.",
+  "19 ans et déjà en route. La majorité attend encore.",
+  "Le champion n'est pas celui qui ne tombe jamais. C'est celui qui se relève toujours.",
+  "Chaque matin tu choisis : avancer ou stagner.",
+  "Ton futur moi te remerciera pour chaque effort d'aujourd'hui.",
+  "Le muscle se construit la nuit — dors 8h et laisse la magie opérer.",
+  "3 œufs, 3 repas, 3 mois. Simple. Exécute.",
+  "La prise de masse n'est pas un secret : mange plus, bouge plus, dors plus."
+];
+
+const PROMPTS = [
+  "Qu'est-ce que tu as accompli aujourd'hui dont tu es fier ?",
+  "Quel a été le moment le plus difficile ? Comment tu l'as géré ?",
+  "Qu'est-ce que tu aurais pu faire mieux aujourd'hui ?",
+  "As-tu mangé tes 3 repas et tes 3 œufs ? Qu'est-ce qui t'en a empêché sinon ?",
+  "Comment tu te sens physiquement et mentalement ce soir ?",
+  "Qu'est-ce qui t'a motivé aujourd'hui ? Qu'est-ce qui t'a freiné ?",
+  "Demain, quelle est la chose la plus importante à accomplir ?"
+];
+
+const BADGES = [
+  {icon:'🔥',name:'Premier Jour',desc:'Commencer le voyage',color:'#E8C547',bg:'#E8C54720',unlock:true,date:'6 Mai 2026'},
+  {icon:'💪',name:'Guerrier du Matin',desc:'7 jours de sport consécutifs',color:'#FF8C42',bg:'#FF8C4220',unlock:false,date:''},
+  {icon:'🥚',name:'Roi des Protéines',desc:'Manger 3 œufs pendant 14 jours',color:'#22c55e',bg:'#22c55e20',unlock:false,date:''},
+  {icon:'🥋',name:'Ceinture de Fer',desc:'21 jours de shadow boxing',color:'#A855F7',bg:'#A855F720',unlock:false,date:''},
+  {icon:'🏋️',name:'Premier Tractions',desc:'Réussir 5 tractions d\'affilée',color:'#4ECDC4',bg:'#4ECDC420',unlock:false,date:''},
+  {icon:'📝',name:'Chroniqueur',desc:'30 entrées de journal',color:'#FF6B9D',bg:'#FF6B9D20',unlock:false,date:''},
+  {icon:'⚖️',name:'+5 kg',desc:'Prendre 5 kg de masse propre',color:'#E8C547',bg:'#E8C54720',unlock:false,date:''},
+  {icon:'🏆',name:'Transformation',desc:'Terminer les 3 mois complets',color:'#FFD700',bg:'#FFD70020',unlock:false,date:''},
+];
+
+const DOMAINS = [
+  {icon:'💪',name:'Sport & Corps Esthétique',sub:'Poids du corps · TKD · Masse',color:'#E8C547',pct:5,
+   milestones:['Routine installée','Tractions 5×','Corps visible','Objectif poids']},
+  {icon:'🍽️',name:'Nutrition & Prise de Masse',sub:'3 repas · 130g protéines/j',color:'#22c55e',pct:5,
+   milestones:['3 repas/jour','3 œufs/jour','+3 kg','+5 kg → 65 kg']},
+  {icon:'🇩🇪',name:'Allemand Goethe',sub:'B2 → Examen Goethe',color:'#4ECDC4',pct:60,
+   milestones:['B2 acquis ✓','Schreiben fort','Hören fort','Exam passé']},
+  {icon:'💻',name:'Digital & Excel',sub:'Compétences professionnelles',color:'#A855F7',pct:10,
+   milestones:['Excel bases','Excel avancé','Word pro']},
+];
+
+// ===== UTILS =====
+const DAY_FR=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+const MONTH_FR=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const SHORT_M=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+function now(){return new Date()}
+function todayKey(){const d=now();return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`}
+function fmtDate(d){return `${d.getDate()} ${SHORT_M[d.getMonth()]} ${d.getFullYear()}`}
+function ls(k,def='[]'){try{const v=localStorage.getItem(k);return v?JSON.parse(v):JSON.parse(def)}catch{return JSON.parse(def)}}
+function lss(k,v){localStorage.setItem(k,JSON.stringify(v))}
+
+function getStreak(){
+  let streak=0;const today2=now();
+  for(let i=0;i<90;i++){
+    const dt=new Date(today2);dt.setDate(dt.getDate()-i);
+    const k=`${dt.getFullYear()}-${dt.getMonth()+1}-${dt.getDate()}`;
+    const c=ls('checks-'+k,'[]');
+    if(c.length>=5)streak++;else break;
+  }
+  return streak;
+}
+function getTotalTasksDone(){
+  let total=0;
+  for(let i=0;i<90;i++){
+    const dt=new Date(2026,4,6+i);
+    const k=`${dt.getFullYear()}-${dt.getMonth()+1}-${dt.getDate()}`;
+    total+=ls('checks-'+k,'[]').length;
+  }
+  return total;
+}
+function calcXP(){
+  const streak=getStreak();
+  const total=getTotalTasksDone();
+  const notes=ls('journal-notes').length;
+  return streak*50+total*10+notes*20;
+}
+
+// ===== NUTRITION =====
+function todayFoodKey(){return 'food-'+todayKey()}
+function getTodayFoods(){return ls(todayFoodKey(),'{}')||{}}
+
+function getTodayMacros(){
+  const foods=ls(todayFoodKey()+'list','[]');
+  let protein=0,kcal=0;
+  foods.forEach(f=>{protein+=f.protein;kcal+=f.kcal});
+  return {protein,kcal};
+}
+
+function initNutriDate(){
+  const d=now();
+  document.getElementById('nutri-date').textContent=`${DAY_FR[d.getDay()]} ${d.getDate()} ${SHORT_M[d.getMonth()]}`;
+}
+
+function updateMacroUI(){
+  const {protein,kcal}=getTodayMacros();
+  document.getElementById('cur-protein').textContent=protein;
+  document.getElementById('cur-kcal').textContent=kcal;
+  document.getElementById('bar-protein').style.width=Math.min(100,Math.round(protein/130*100))+'%';
+  document.getElementById('bar-kcal').style.width=Math.min(100,Math.round(kcal/2700*100))+'%';
+  document.getElementById('stat-protein').textContent=protein+'g';
+}
+
+function initQuickAdd(){
+  const grid=document.getElementById('quick-add-grid');
+  grid.innerHTML=FOODS.map((f,i)=>`
+    <button class="qa-btn" onclick="addFood(${i})">
+      <span class="qa-btn-icon">${f.icon}</span>
+      <div class="qa-btn-info">
+        <div class="qa-btn-name">${f.name}</div>
+        <div class="qa-btn-macros">${f.protein}g prot · ${f.kcal} kcal · ${f.unit}</div>
+      </div>
+    </button>
+  `).join('');
+}
+
+function addFood(idx){
+  const f=FOODS[idx];
+  const key=todayFoodKey()+'list';
+  const foods=ls(key,'[]');
+  foods.push({icon:f.icon,name:f.name,protein:f.protein,kcal:f.kcal,unit:f.unit,ts:Date.now()});
+  lss(key,foods);
+  renderFoodLog();updateMacroUI();
+}
+
+function deleteFood(i){
+  const key=todayFoodKey()+'list';
+  const foods=ls(key,'[]');
+  foods.splice(i,1);
+  lss(key,foods);
+  renderFoodLog();updateMacroUI();
+}
+
+function renderFoodLog(){
+  const foods=ls(todayFoodKey()+'list','[]');
+  const el=document.getElementById('food-log-list');
+  if(!foods.length){el.innerHTML='<div class="food-log-empty">Rien enregistré pour l\'instant 👆 Tape sur un aliment pour ajouter</div>';return}
+  el.innerHTML=foods.map((f,i)=>`
+    <div class="food-log-item">
+      <div class="fli-left">
+        <span class="fli-icon">${f.icon}</span>
+        <div><div class="fli-name">${f.name}</div><div class="fli-macros">${f.protein}g prot · ${f.kcal} kcal</div></div>
+      </div>
+      <span class="fli-del" onclick="deleteFood(${i})">✕</span>
+    </div>
+  `).join('');
+}
+
+// ===== DATE & HOME =====
+function initDate(){
+  const d=now();
+  const h=d.getHours();
+  const greet=h<12?'Bonjour ☀️':h<18?'Bon après-midi 🌤️':'Bonsoir 🌙';
+  document.getElementById('home-greeting').textContent=greet;
+  document.getElementById('home-date-title').textContent=`${DAY_FR[d.getDay()]}\n${d.getDate()} ${MONTH_FR[d.getMonth()]}`;
+  const aout=new Date(2026,7,1);
+  const diff=Math.max(0,Math.ceil((aout-d)/(1000*60*60*24)));
+  document.getElementById('countdown-num').textContent=diff;
+  const streak=getStreak();
+  document.getElementById('streak-num').textContent=streak;
+  document.getElementById('stat-streak').textContent=streak;
+  document.getElementById('ps-streak').textContent=streak;
+  const notes=ls('journal-notes');
+  document.getElementById('ps-notes').textContent=notes.length;
+  document.getElementById('ps-tasks').textContent=getTotalTasksDone();
+  document.getElementById('jw-date').textContent=fmtDate(d);
+  document.getElementById('jw-info').textContent=`${DAY_FR[d.getDay()]} · Jour ${Math.max(1,Math.ceil((d-new Date(2026,4,6))/(1000*60*60*24))+1)} de ta transformation`;
+  document.getElementById('journal-prompt').textContent=PROMPTS[d.getDate()%PROMPTS.length];
+}
+
+// ===== XP =====
+const LEVELS=[
+  {lv:1,name:'Recrue',xpMin:0,xpMax:100},
+  {lv:2,name:'Apprenti',xpMin:100,xpMax:250},
+  {lv:3,name:'Combattant',xpMin:250,xpMax:500},
+  {lv:4,name:'Guerrier',xpMin:500,xpMax:800},
+  {lv:5,name:'Champion',xpMin:800,xpMax:1200},
+  {lv:6,name:'Élite',xpMin:1200,xpMax:1700},
+  {lv:7,name:'Maître',xpMin:1700,xpMax:2300},
+  {lv:8,name:'Légende',xpMin:2300,xpMax:3000}
+];
+function initXP(){
+  const xp=calcXP();
+  const lv=LEVELS.find(l=>xp>=l.xpMin&&xp<l.xpMax)||LEVELS[LEVELS.length-1];
+  const pct=Math.min(100,Math.round((xp-lv.xpMin)/(lv.xpMax-lv.xpMin)*100));
+  document.getElementById('xp-badge').textContent='LV '+lv.lv;
+  document.getElementById('xp-level-title').textContent=lv.name;
+  document.getElementById('xp-sub').textContent=`${xp} XP total · Continue comme ça !`;
+  document.getElementById('xp-fill').style.width=pct+'%';
+  document.getElementById('xp-cur').textContent=xp+' XP';
+  document.getElementById('xp-max').textContent=lv.xpMax+' XP';
+}
+
+// ===== WEEK GOALS =====
+function getCurrentMonthData(){const m=now().getMonth();return PLAN_DATA[m===4?0:m===5?1:m===6?2:0]}
+function getCurrentWeekData(){
+  const d=now().getDate();const mo=getCurrentMonthData();
+  for(const w of mo.weeks){const[s,e]=w.dates.split('→').map(x=>parseInt(x));if(d>=s&&d<=e)return w}
+  return mo.weeks[0];
+}
+function initWeekGoals(){
+  const mo=getCurrentMonthData();const wk=getCurrentWeekData();
+  document.getElementById('week-goal-card').innerHTML=`
+    <div class="week-goal-header">
+      <div class="week-goal-month" style="color:${mo.color}">${mo.name} · SEMAINE ${wk.num}</div>
+      <div class="week-goal-title">${wk.name}</div>
+      <div class="week-goal-dates">${wk.dates}</div>
+    </div>
+    ${wk.goals.slice(0,3).map(g=>`
+      <div class="week-goal-item">
+        <div class="wgi-icon" style="background:${mo.color}15">${g.icon}</div>
+        <div><div class="wgi-title" style="color:${mo.color}">${g.title}</div><div class="wgi-text">${g.text}</div></div>
+      </div>
+    `).join('')}
+  `;
+}
+
+// ===== TASKS =====
+function initTasks(){
+  const key='checks-'+todayKey();
+  const checks=ls(key,'[]');
+  let lastCat='';
+  let html='';
+  TASKS.forEach((t,i)=>{
+    if(t.cat!==lastCat){
+      html+=`<div class="task-category">${t.cat}</div>`;
+      lastCat=t.cat;
+    }
+    html+=`
+      <div class="task-row ${checks.includes(i)?'done':''}" onclick="toggleTask(${i})">
+        <div class="task-check">${checks.includes(i)?'✓':''}</div>
+        <div class="task-body">
+          <div class="task-name">${t.name}</div>
+          <div class="task-sub">${t.sub}</div>
+        </div>
+        <div class="task-emoji">${t.icon}</div>
+      </div>
+    `;
+  });
+  document.getElementById('task-list').innerHTML=html;
+  updateTaskProgress(checks.length);
+}
+function toggleTask(i){
+  const key='checks-'+todayKey();
+  const checks=ls(key,'[]');
+  const idx=checks.indexOf(i);
+  if(idx>-1)checks.splice(idx,1);else checks.push(i);
+  lss(key,checks);
+  initTasks();initXP();
+}
+function resetTasks(){lss('checks-'+todayKey(),[]);initTasks();initXP()}
+function updateTaskProgress(done){
+  const pct=Math.round(done/TASKS.length*100);
+  const offset=125.6-(125.6*pct/100);
+  document.getElementById('tasks-circle').style.strokeDashoffset=offset;
+  document.getElementById('tasks-pct-text').textContent=pct+'%';
+  document.getElementById('stat-done').textContent=done;
+}
+
+// ===== HEATMAP =====
+function initHeatmap(){
+  let html='';
+  for(let d=1;d<=31;d++){
+    const k=`2026-5-${d}`;
+    const c=ls('checks-'+k,'[]');
+    const lvl=c.length===0?0:c.length<=2?1:c.length<=4?2:c.length<=5?3:4;
+    const isToday=now().getDate()===d&&now().getMonth()===4;
+    html+=`<div class="heatmap-day level-${lvl} ${isToday?'today':''}" title="${d} Mai: ${c.length} tâches"></div>`;
+  }
+  document.getElementById('heatmap').innerHTML=html;
+}
+
+// ===== PLAN =====
+function initPlan(){
+  document.getElementById('plan-body').innerHTML=PLAN_DATA.map(mo=>`
+    <div class="month-accordion" id="ma-${mo.id}">
+      <div class="month-acc-header" onclick="toggleMA('${mo.id}')">
+        <div class="month-acc-color" style="background:${mo.color}"></div>
+        <div class="month-acc-info">
+          <div class="month-acc-name" style="color:${mo.color}">${mo.name}</div>
+          <div class="month-acc-theme">${mo.theme} · ${mo.sub}</div>
+        </div>
+        <span class="month-acc-arrow">▾</span>
+      </div>
+      <div class="month-acc-body">
+        ${mo.weeks.map(w=>`
+          <div class="week-acc" id="wa-${mo.id}-${w.num}">
+            <div class="week-acc-header" onclick="toggleWA('${mo.id}',${w.num})">
+              <div>
+                <div class="week-acc-num" style="color:${mo.color}">SEMAINE ${w.num} · ${w.dates}</div>
+                <div class="week-acc-name">${w.name}</div>
+              </div>
+              <span class="week-acc-arrow">▾</span>
+            </div>
+            <div class="week-acc-body">
+              ${w.goals.map(g=>`
+                <div class="goal-item">
+                  <div class="goal-icon-box" style="background:${mo.color}15">${g.icon}</div>
+                  <div style="flex:1">
+                    <div class="goal-item-title" style="color:${mo.color}">${g.title}</div>
+                    <div class="goal-item-text">${g.text}</div>
+                    ${g.exercises&&g.exercises.length?`<div class="exercise-tags">${g.exercises.map(e=>`<div class="ex-tag">✦ ${e}</div>`).join('')}</div>`:''}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('ma-'+getCurrentMonthData().id)?.classList.add('open');
+}
+function toggleMA(id){document.getElementById('ma-'+id).classList.toggle('open')}
+function toggleWA(mo,num){document.getElementById('wa-'+mo+'-'+num).classList.toggle('open')}
+
+// ===== JOURNAL =====
+let selectedMood='📝';
+function selectMood(el,mood){
+  document.querySelectorAll('.mood-opt').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');selectedMood=mood;
+}
+function saveNote(){
+  const text=document.getElementById('journal-input').value.trim();
+  if(!text)return;
+  const d=now();
+  const notes=ls('journal-notes');
+  notes.unshift({date:fmtDate(d),day:DAY_FR[d.getDay()],text,mood:selectedMood,ts:Date.now()});
+  lss('journal-notes',notes);
+  document.getElementById('journal-input').value='';
+  selectedMood='📝';
+  document.querySelectorAll('.mood-opt').forEach(b=>b.classList.remove('active'));
+  renderNotes();initDate();
+}
+function deleteNote(i){
+  const notes=ls('journal-notes');notes.splice(i,1);lss('journal-notes',notes);renderNotes();initDate();
+}
+function renderNotes(){
+  const notes=ls('journal-notes');
+  const title=document.getElementById('journal-entries-title');
+  const wrap=document.getElementById('journal-entries');
+  title.textContent=notes.length?`${notes.length} entrée${notes.length>1?'s':''}`:' ';
+  if(!notes.length){wrap.innerHTML='<div class="j-empty">Aucune entrée pour l\'instant ✍️<br>Chaque soir, prends 5 minutes pour noter ta journée.</div>';return}
+  wrap.innerHTML=notes.map((n,i)=>`
+    <div class="j-entry">
+      <div class="j-entry-header">
+        <div><div class="j-entry-date">${n.date}</div><div class="j-entry-day">${n.day}</div></div>
+        <div class="j-entry-right"><div class="j-entry-mood">${n.mood}</div><div class="j-entry-del" onclick="deleteNote(${i})">🗑️</div></div>
+      </div>
+      <div class="j-entry-body">${n.text}</div>
+    </div>
+  `).join('');
+}
+
+// ===== PROFIL =====
+function initDomains(){
+  document.getElementById('domain-cards').innerHTML=DOMAINS.map(d=>`
+    <div class="domain-card">
+      <div class="domain-header">
+        <div class="domain-icon" style="background:${d.color}15">${d.icon}</div>
+        <div class="domain-info"><div class="domain-name">${d.name}</div><div class="domain-sub">${d.sub}</div></div>
+        <div class="domain-pct" style="color:${d.color}">${d.pct}%</div>
+      </div>
+      <div class="domain-body">
+        <div class="domain-bar-bg"><div class="domain-bar-fill" style="width:${d.pct}%;background:linear-gradient(90deg,${d.color},${d.color}88)"></div></div>
+        <div class="domain-milestones">${d.milestones.map((m,i)=>`<div class="domain-ms ${d.pct>=(i+1)/d.milestones.length*100?'done':''}">${m}</div>`).join('')}</div>
+      </div>
+    </div>
+  `).join('');
+}
+function initBadges(){
+  document.getElementById('badges-grid').innerHTML=BADGES.map(b=>`
+    <div class="badge-card ${b.unlock?'':'locked'}">
+      <div class="badge-icon-wrap" style="background:${b.bg}">${b.icon}</div>
+      <div><div class="badge-name">${b.name}</div><div class="badge-desc">${b.desc}</div>${b.unlock?`<div class="badge-unlocked">✦ Débloqué ${b.date}</div>`:''}</div>
+    </div>
+  `).join('');
+}
+
+// ===== MOTIV =====
+let mIdx=Math.floor(Math.random()*MOTIVS.length);
+function nextMotiv(){mIdx=(mIdx+1)%MOTIVS.length;document.getElementById('motiv-text').textContent=MOTIVS[mIdx]}
+
+// ===== TABS =====
+function showTab(t,b){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));
+  document.getElementById(t).classList.add('active');
+  b.classList.add('active');
+  document.getElementById('app').scrollTo(0,0);
+}
+
+// ===== BOOT =====
+document.getElementById('motiv-text').textContent=MOTIVS[mIdx];
+initDate();initXP();initWeekGoals();initTasks();initHeatmap();
+initPlan();renderNotes();initDomains();initBadges();
+initNutriDate();initQuickAdd();renderFoodLog();updateMacroUI();
+</script>
+</body>
+</html>
